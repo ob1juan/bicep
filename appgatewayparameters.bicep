@@ -10,7 +10,6 @@ module appGw 'appgateway.bicep' = {
     agencyCode: 'g00'
     appName:'testApp'
     envCode:'t'
-    frontendPublicIpResourceId:''
     routingRules: [
       {key:''}
     ]
