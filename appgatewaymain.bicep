@@ -10,18 +10,24 @@ module appGw 'appgateway.bicep' = {
     agencyCode: 'g00'
     appName:'testApp'
     envCode:'t'
+    numberCode:'001'
+    sku:'WAF_Medium'
+    capacity: 2
+    http2Enabled:true
     routingRules: [
       {key:''}
     ]
 
     subnetName:'subnet'
     vNetName:'vnet'
+    diagnosticLogsRetentionInDays:365
     tags: {
         ApplicationName: 'testApp'
         AppPriority: 'dev'
         ChargeCode: '1234'
         DataProtectionCategorization: 'unclassified'
     }
+    
     backendPools: [
 
       {
@@ -43,7 +49,6 @@ module appGw 'appgateway.bicep' = {
     ]
 
     backendHttpConfigurations: [
-
       {
 
         name: 'projectreviewapptest.demo.obijuan.com'

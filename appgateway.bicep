@@ -23,7 +23,7 @@ param envCode string
 @description('Optional. Numeric identifier for resource. Must be three characters')
 @minLength(3)
 @maxLength(3)
-param numberCode string = '001'
+param numberCode string
 
 @description('Optional. Location for all resources.')
 param location string = resourceGroup().location
@@ -46,15 +46,15 @@ param location string = resourceGroup().location
   'WAF_v2'
 
 ])
-param sku string = 'WAF_Medium'
+param sku string
 
 @description('Optional. The number of Application instances to be configured.')
 @minValue(1)
 @maxValue(10)
-param capacity int = 2
+param capacity int
 
 @description('Optional. Enables HTTP/2 support.')
-param http2Enabled bool = true
+param http2Enabled bool
 
 // @description('Required. PublicIP Resource Id used in Public Frontend.')
 // param frontendPublicIpResourceId string
@@ -66,7 +66,7 @@ param http2Enabled bool = true
   limitations: 'The IP must be available in the configured subnet. If empty, allocation method will be set to dynamic. Once a method (static or dynamic) has been configured, it cannot be changed'
 
 })
-param frontendPrivateIpAddress string = ''
+param frontendPrivateIpAddressStatic string = ''
 
 @description('Required. The name of the Virtual Network where the Application Gateway will be deployed.')
 param vNetName string
@@ -117,7 +117,7 @@ param routingRules array
 @description('Optional. Specifies the number of days that logs will be kept for; a value of 0 will retain data indefinitely.')
 @minValue(0)
 @maxValue(365)
-param diagnosticLogsRetentionInDays int = 365
+param diagnosticLogsRetentionInDays int
 
 @description('Optional. Resource identifier of the Diagnostic Storage Account.')
 param diagnosticStorageAccountId string = ''
@@ -245,7 +245,7 @@ var frontendPrivateIPStaticConfiguration = {
 
   privateIPAllocationMethod: 'Static'
 
-  privateIPAddress: frontendPrivateIpAddress
+  privateIPAddress: frontendPrivateIpAddressStatic
 
   subnet: {
 
@@ -314,8 +314,6 @@ var identity = {
   }
 
 }
-
- 
 
 var backendAddressPools = [for backendPool in backendPools: {
 
@@ -637,7 +635,7 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2021-02-01' =
 
         //type: 'Microsoft.Network/applicationGateways/frontendIPConfigurations'
 
-        properties: empty(frontendPrivateIpAddress) ? frontendPrivateIPDynamicConfiguration : frontendPrivateIPStaticConfiguration
+        properties: empty(frontendPrivateIpAddressStatic) ? frontendPrivateIPDynamicConfiguration : frontendPrivateIPStaticConfiguration
 
       }
 
@@ -736,7 +734,7 @@ resource appgwpip 'Microsoft.Network/publicIPAddresses@2020-07-01' = {
   }
 }
 output agwPip string = appgwpip.properties.ipAddress
- 
+
 
 @description('The name of the application gateway')
 
