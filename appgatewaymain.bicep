@@ -15,7 +15,16 @@ module appGw 'appgateway.bicep' = {
     capacity: 2
     http2Enabled:true
     routingRules: [
-      {key:''}
+      {
+        frontendListenerName: 'front end listerner name 1'
+        backendHttpConfigurationName: ' backend http configuration name 1'
+        backendPoolName: 'backend pool name 1'
+      }
+      {
+        frontendListenerName: 'front end listerner name 2'
+        backendHttpConfigurationName: ' backend http configuration name 2'
+        backendPoolName: 'backend pool name 2'
+      }
     ]
 
     subnetName:'subnet'
