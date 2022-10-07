@@ -465,7 +465,7 @@ var frontendHttpListeners_var = [for frontendHttpListener in frontendHttpListene
 
 var httpsRequestRoutingRules = [for routingRule in routingRules: {
 
-  name: '${routingRule.frontendListenerName}-${routingRule.backendHttpConfigurationName}-${routingRule.backendHttpConfigurationName}'
+  name: '${routingRule.frontendListenerName}-${routingRule.backendHttpConfigurationName}'
 
   properties: {
 
